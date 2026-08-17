@@ -19,6 +19,13 @@
             background-color: #f5f7fb;
             color: #1e293b;
             padding-bottom: 80px;
+            min-height: 100vh;
+        }
+
+        /* ===== 酒店预订页面容器 ===== */
+        .hotel-app {
+            position: relative;
+            z-index: 1;
         }
 
         /* ===== 顶部导航 ===== */
@@ -213,6 +220,7 @@
             box-shadow: 0 2px 8px rgba(42, 95, 143, 0.2);
         }
 
+        /* ===== 结果头部 ===== */
         .result-header {
             display: flex;
             justify-content: space-between;
@@ -248,6 +256,7 @@
             margin-right: 4px;
         }
 
+        /* ===== 酒店列表 ===== */
         .hotel-list {
             padding: 0 16px 20px;
             display: flex;
@@ -272,10 +281,19 @@
         .hotel-img {
             width: 100%;
             height: 160px;
-            background-size: cover;
-            background-position: center;
             position: relative;
-            background-color: #e2e8f0; /* 图片加载前的占位背景 */
+            background-color: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .hotel-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
         .hotel-img .badge {
@@ -290,6 +308,7 @@
             padding: 4px 12px;
             border-radius: 20px;
             letter-spacing: 0.3px;
+            z-index: 2;
         }
 
         .hotel-img .price-tag {
@@ -303,6 +322,7 @@
             border-radius: 20px;
             font-size: 14px;
             font-weight: 700;
+            z-index: 2;
         }
 
         .hotel-img .price-tag small {
@@ -433,7 +453,9 @@
             font-size: 14px;
         }
 
-        /* ===== 模态框 ===== */
+        /* ================================================================
+           模态框 (预订确认 & 成功)
+           ================================================================ */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -481,7 +503,6 @@
         .modal-box .icon-big {
             text-align: center;
             font-size: 48px;
-            color: #2a5f8f;
             margin-bottom: 6px;
         }
 
@@ -504,6 +525,7 @@
             padding: 10px 0;
             border-bottom: 1px solid #f1f4f9;
             font-size: 15px;
+            align-items: center;
         }
 
         .modal-box .detail-row:last-of-type {
@@ -512,27 +534,151 @@
 
         .modal-box .detail-row .label {
             color: #64748b;
+            flex-shrink: 0;
         }
 
         .modal-box .detail-row .value {
             font-weight: 600;
             color: #0f172a;
+            text-align: right;
         }
 
+        /* ===== 优惠券专用行 ===== */
+        .modal-box .detail-row.coupon-row {
+            background: #fef2f2;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin: 4px 0 2px;
+            border-bottom: none;
+            border: 1px solid #fecaca;
+        }
+
+        .modal-box .detail-row.coupon-row .label {
+            color: #b91c1c;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .modal-box .detail-row.coupon-row .label i {
+            font-size: 16px;
+        }
+
+        .modal-box .detail-row.coupon-row .value {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        .modal-box .detail-row.coupon-row .value .coupon-badge {
+            font-size: 13px;
+            background: #fee2e2;
+            padding: 2px 10px;
+            border-radius: 20px;
+            color: #b91c1c;
+        }
+
+        /* ===== iOS 风格开关 ===== */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .switch .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: #fff;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+
+        .switch input:checked+.slider {
+            background-color: #22c55e;
+        }
+
+        .switch input:checked+.slider:before {
+            transform: translateX(18px);
+        }
+
+        .switch input:disabled+.slider {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .switch input:disabled+.slider:before {
+            opacity: 0.7;
+        }
+
+        /* ===== 总价行 ===== */
         .modal-box .total {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            align-items: stretch;
             margin-top: 18px;
             padding-top: 14px;
             border-top: 2px solid #e9edf4;
+        }
+
+        .modal-box .total .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 18px;
         }
 
-        .modal-box .total .price {
+        .modal-box .total .total-row .price {
             font-weight: 700;
             color: #1e3a5f;
             font-size: 22px;
+        }
+
+        .modal-box .total .total-row .price .original-price {
+            font-size: 14px;
+            font-weight: 400;
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+
+        .modal-box .total .saved-tag {
+            text-align: right;
+            font-size: 13px;
+            color: #22c55e;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .modal-box .total .saved-tag.hidden {
+            display: none;
         }
 
         .modal-box .confirm-btn {
@@ -553,7 +699,23 @@
         .modal-box .confirm-btn:active {
             transform: scale(0.96);
         }
+        .modal-box .confirm-btn:disabled {
+            opacity: 0.7;
+            transform: scale(0.98);
+            cursor: not-allowed;
+        }
 
+        .modal-box .coupon-unavailable {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 14px;
+            padding: 6px 0;
+            background: #f8fafc;
+            border-radius: 10px;
+            margin: 4px 0 2px;
+        }
+
+        /* ===== Toast ===== */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -586,6 +748,7 @@
             color: #4ade80;
         }
 
+        /* ===== 动画 ===== */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -606,6 +769,18 @@
             }
         }
 
+        @keyframes confettiDrop {
+            0% {
+                transform: translateY(-20px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(60px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== 响应式 ===== */
         @media (max-width: 400px) {
             .filter-grid {
                 gap: 8px;
@@ -627,6 +802,19 @@
             }
             .modal-box {
                 padding: 22px 18px 20px;
+            }
+            .switch {
+                width: 38px;
+                height: 22px;
+            }
+            .switch .slider:before {
+                height: 16px;
+                width: 16px;
+                left: 3px;
+                bottom: 3px;
+            }
+            .switch input:checked+.slider:before {
+                transform: translateX(16px);
             }
         }
 
@@ -662,121 +850,509 @@
             background: #cbd5e1;
             border-radius: 10px;
         }
+
+        /* ================================================================
+           优惠券弹窗样式
+           ================================================================ */
+        .coupon-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .coupon-overlay.hidden {
+            display: none;
+            animation: none;
+        }
+
+        .coupon-card {
+            background: #fff;
+            max-width: 380px;
+            width: 100%;
+            border-radius: 28px;
+            padding: 0 0 24px 0;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .coupon-header {
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            padding: 32px 24px 28px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coupon-header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .coupon-header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -40px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+        }
+
+        .coupon-header .coupon-icon {
+            font-size: 44px;
+            margin-bottom: 8px;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coupon-header .coupon-title {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coupon-header .coupon-amount {
+            font-size: 58px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .coupon-header .coupon-amount small {
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .coupon-header .coupon-sub {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+            margin-top: 2px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .coupon-body {
+            padding: 20px 24px 0;
+            text-align: center;
+        }
+
+        .coupon-body .coupon-expiry {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 18px;
+        }
+
+        .coupon-body .coupon-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #f43f5e, #e11d48);
+            color: #fff;
+            border: none;
+            border-radius: 16px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(225, 29, 72, 0.35);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.5px;
+        }
+
+        .coupon-body .coupon-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
+        }
+
+        .coupon-body .coupon-btn:disabled {
+            opacity: 0.7;
+            transform: scale(0.98);
+            cursor: not-allowed;
+        }
+
+        .coupon-body .coupon-btn .btn-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .coupon-body .coupon-btn .btn-text i {
+            font-size: 18px;
+        }
+
+        .coupon-body .coupon-btn.success {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            box-shadow: 0 8px 24px rgba(22, 163, 74, 0.35);
+        }
+
+        .coupon-body .coupon-tip {
+            font-size: 11px;
+            color: #cbd5e1;
+            margin-top: 14px;
+            padding-bottom: 4px;
+        }
+
+        .coupon-divider {
+            height: 2px;
+            background: repeating-linear-gradient(90deg, #e2e8f0 0px, #e2e8f0 8px, transparent 8px, transparent 14px);
+            margin: 16px 24px 0;
+        }
+
+        .coupon-close {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 22px;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: color 0.2s, transform 0.2s;
+            background: none;
+            border: none;
+            z-index: 10;
+            padding: 4px 8px;
+        }
+
+        .coupon-close:active {
+            color: #fff;
+            transform: scale(0.9);
+        }
+
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiDrop 1.2s ease-in forwards;
+        }
+
+        .confetti:nth-child(1) {
+            left: 10%;
+            background: #fbbf24;
+            animation-delay: 0.1s;
+        }
+        .confetti:nth-child(2) {
+            left: 30%;
+            background: #f472b6;
+            animation-delay: 0.3s;
+        }
+        .confetti:nth-child(3) {
+            left: 50%;
+            background: #60a5fa;
+            animation-delay: 0.5s;
+        }
+        .confetti:nth-child(4) {
+            left: 70%;
+            background: #34d399;
+            animation-delay: 0.2s;
+        }
+        .confetti:nth-child(5) {
+            left: 90%;
+            background: #fbbf24;
+            animation-delay: 0.4s;
+        }
+        .confetti:nth-child(6) {
+            left: 20%;
+            background: #f472b6;
+            animation-delay: 0.6s;
+        }
+        .confetti:nth-child(7) {
+            left: 60%;
+            background: #60a5fa;
+            animation-delay: 0.15s;
+        }
+        .confetti:nth-child(8) {
+            left: 80%;
+            background: #34d399;
+            animation-delay: 0.45s;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ===== 顶部导航 ===== -->
-    <header class="header">
-        <div class="header-top">
-            <h1><i class="fas fa-hotel"></i> 酒店预订</h1>
-            <div class="actions">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-user-circle"></i>
+    <!-- ============================================================
+    优惠券弹窗（默认显示）
+    ============================================================ -->
+    <div class="coupon-overlay" id="couponOverlay">
+        <div class="coupon-card">
+            <button class="coupon-close" id="couponCloseBtn" aria-label="关闭">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="coupon-header">
+                <div class="confetti-container">
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                    <div class="confetti"></div>
+                </div>
+                <span class="coupon-icon">🧧</span>
+                <div class="coupon-title">🎊 恭喜获得</div>
+                <div class="coupon-amount">
+                    <small>¥</small>150
+                </div>
+                <div class="coupon-sub">酒店预订优惠券</div>
             </div>
+            <div class="coupon-body">
+                <div class="coupon-expiry">⏰ 有效期至 2026-09-30</div>
+                <button class="coupon-btn" id="couponClaimBtn">
+                    <span class="btn-text">
+                        <i class="fas fa-gift"></i> 立即领取
+                    </span>
+                </button>
+                <div class="coupon-tip">点击领取即表示同意使用条款</div>
+            </div>
+            <div class="coupon-divider"></div>
         </div>
-    </header>
+    </div>
 
-    <!-- ===== 搜索卡片 ===== -->
-    <div class="search-card">
-        <div class="search-row">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="搜索目的地、酒店名..." />
-        </div>
+    <!-- ============================================================
+    酒店预订页面
+    ============================================================ -->
+    <div class="hotel-app" id="hotelApp">
 
-        <div class="filter-grid">
-            <div class="filter-item">
-                <label><i class="fas fa-calendar-check" style="margin-right:4px;"></i>入住</label>
-                <input type="date" id="checkinDate" />
-            </div>
-            <div class="filter-item">
-                <label><i class="fas fa-calendar-times" style="margin-right:4px;"></i>退房</label>
-                <input type="date" id="checkoutDate" />
-            </div>
-            <div class="filter-item">
-                <label><i class="fas fa-user-friends" style="margin-right:4px;"></i>住客</label>
-                <div class="guest-control">
-                    <button id="guestMinus">−</button>
-                    <span class="guest-number" id="guestNumber">2</span>
-                    <button id="guestPlus">+</button>
+        <header class="header">
+            <div class="header-top">
+                <h1><i class="fas fa-hotel"></i> 酒店预订</h1>
+                <div class="actions">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-user-circle"></i>
                 </div>
             </div>
-            <div class="filter-item">
-                <label><i class="fas fa-bed" style="margin-right:4px;"></i>房型</label>
-                <select id="roomTypeSelect">
-                    <option value="不限">不限</option>
-                    <option value="大床房">大床房</option>
-                    <option value="双床房">双床房</option>
-                    <option value="海景房">海景房</option>
-                    <option value="套房">套房</option>
-                    <option value="别墅">别墅</option>
-                </select>
+        </header>
+
+        <div class="search-card">
+            <div class="search-row">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索目的地、酒店名..." />
+            </div>
+
+            <div class="filter-grid">
+                <div class="filter-item">
+                    <label><i class="fas fa-calendar-check" style="margin-right:4px;"></i>入住</label>
+                    <input type="date" id="checkinDate" />
+                </div>
+                <div class="filter-item">
+                    <label><i class="fas fa-calendar-times" style="margin-right:4px;"></i>退房</label>
+                    <input type="date" id="checkoutDate" />
+                </div>
+                <div class="filter-item">
+                    <label><i class="fas fa-user-friends" style="margin-right:4px;"></i>住客</label>
+                    <div class="guest-control">
+                        <button id="guestMinus">−</button>
+                        <span class="guest-number" id="guestNumber">2</span>
+                        <button id="guestPlus">+</button>
+                    </div>
+                </div>
+                <div class="filter-item">
+                    <label><i class="fas fa-bed" style="margin-right:4px;"></i>房型</label>
+                    <select id="roomTypeSelect">
+                        <option value="不限">不限</option>
+                        <option value="大床房">大床房</option>
+                        <option value="双床房">双床房</option>
+                        <option value="海景房">海景房</option>
+                        <option value="套房">套房</option>
+                        <option value="别墅">别墅</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="search-btn" id="searchBtn"><i class="fas fa-search" style="margin-right:8px;"></i> 搜索酒店</button>
+        </div>
+
+        <div class="result-header">
+            <h2>🏨 <span id="resultCount">10</span> 家酒店</h2>
+            <div class="sort" id="sortBtn"><i class="fas fa-arrow-up-wide-short"></i> 价格</div>
+        </div>
+
+        <div class="hotel-list" id="hotelList"></div>
+
+        <div class="empty-state" id="emptyState" style="display:none;">
+            <i class="fas fa-map-pin"></i>
+            <h3>未找到匹配酒店</h3>
+            <p>试试修改搜索条件或日期</p>
+        </div>
+
+        <!-- ===== 预订模态框 ===== -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-box">
+                <button class="close-btn" id="modalClose"><i class="fas fa-times"></i></button>
+                <div class="icon-big">🏨</div>
+                <h2 id="modalHotelName">酒店名称</h2>
+                <p class="sub" id="modalHotelAddr">地址信息</p>
+
+                <div class="detail-row">
+                    <span class="label">📅 入住</span>
+                    <span class="value" id="modalCheckin">2026-08-15</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">📅 退房</span>
+                    <span class="value" id="modalCheckout">2026-08-16</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">👤 住客</span>
+                    <span class="value" id="modalGuest">2 成人</span>
+                </div>
+                <div class="detail-row">
+                    <span class="label">🛏️ 房型</span>
+                    <span class="value" id="modalRoom">标准大床房</span>
+                </div>
+
+                <!-- 优惠券行：仅在已领取时显示 -->
+                <div id="couponRowContainer">
+                    <!-- 由 JS 动态渲染 -->
+                </div>
+
+                <!-- 总价 -->
+                <div class="total" id="totalContainer">
+                    <div class="total-row">
+                        <span>总价 (含税)</span>
+                        <span class="price" id="modalTotal">
+                            <span class="original-price" id="originalPriceDisplay"></span>
+                            <span id="finalPriceDisplay">¥688</span>
+                        </span>
+                    </div>
+                    <div class="saved-tag hidden" id="savedTag">🎉 已减 ¥150</div>
+                </div>
+
+                <button class="confirm-btn" id="confirmBook"><i class="fas fa-check-circle" style="margin-right:8px;"></i> 确认预订</button>
             </div>
         </div>
 
-        <button class="search-btn" id="searchBtn"><i class="fas fa-search" style="margin-right:8px;"></i> 搜索酒店</button>
-    </div>
-
-    <!-- ===== 结果头部 ===== -->
-    <div class="result-header">
-        <h2>🏨 <span id="resultCount">10</span> 家酒店</h2>
-        <div class="sort" id="sortBtn"><i class="fas fa-arrow-up-wide-short"></i> 价格</div>
-    </div>
-
-    <!-- ===== 酒店列表 ===== -->
-    <div class="hotel-list" id="hotelList"></div>
-
-    <!-- ===== 空状态 ===== -->
-    <div class="empty-state" id="emptyState" style="display:none;">
-        <i class="fas fa-map-pin"></i>
-        <h3>未找到匹配酒店</h3>
-        <p>试试修改搜索条件或日期</p>
-    </div>
-
-    <!-- ===== 预订模态框 ===== -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-box">
-            <button class="close-btn" id="modalClose"><i class="fas fa-times"></i></button>
-            <div class="icon-big">🏨</div>
-            <h2 id="modalHotelName">酒店名称</h2>
-            <p class="sub" id="modalHotelAddr">地址信息</p>
-
-            <div class="detail-row">
-                <span class="label">📅 入住</span>
-                <span class="value" id="modalCheckin">2026-08-15</span>
+        <!-- ===== 预订成功模态框 ===== -->
+        <div class="modal-overlay" id="successOverlay">
+            <div class="modal-box" style="text-align:center;">
+                <div class="icon-big" style="color:#22c55e;">✅</div>
+                <h2>🎉 预订成功！</h2>
+                <p class="sub" id="successSub">您的订单已提交</p>
+                <div id="successDetails" style="margin:8px 0 16px; font-size:15px; color:#475569; line-height:1.8;">
+                    <!-- 动态填充 -->
+                </div>
+                <button class="confirm-btn" id="successOkBtn" style="background: linear-gradient(135deg, #22c55e, #16a34a);">好的</button>
             </div>
-            <div class="detail-row">
-                <span class="label">📅 退房</span>
-                <span class="value" id="modalCheckout">2026-08-16</span>
-            </div>
-            <div class="detail-row">
-                <span class="label">👤 住客</span>
-                <span class="value" id="modalGuest">2 成人</span>
-            </div>
-            <div class="detail-row">
-                <span class="label">🛏️ 房型</span>
-                <span class="value" id="modalRoom">标准大床房</span>
-            </div>
-
-            <div class="total">
-                <span>总价 (含税)</span>
-                <span class="price" id="modalTotal">¥688</span>
-            </div>
-
-            <button class="confirm-btn" id="confirmBook"><i class="fas fa-check-circle" style="margin-right:8px;"></i> 确认预订</button>
         </div>
-    </div>
 
-    <!-- ===== Toast（保留但未使用） ===== -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMsg">预订成功！</span>
+        <!-- Toast -->
+        <div class="toast" id="toast">
+            <i class="fas fa-check-circle"></i>
+            <span id="toastMsg">预订成功！</span>
+        </div>
+
     </div>
+    <!-- ===== /hotel-app ===== -->
+
 
     <script>
         // ============================================================
+        //  全局状态：优惠券是否已领取
+        // ============================================================
+        window.couponClaimed = false;
+
+        // ============================================================
+        //  优惠券弹窗逻辑
+        // ============================================================
+        (function() {
+            var overlay = document.getElementById('couponOverlay');
+            var claimBtn = document.getElementById('couponClaimBtn');
+            var closeBtn = document.getElementById('couponCloseBtn');
+            var toast = document.getElementById('toast');
+            var toastMsg = document.getElementById('toastMsg');
+            var toastTimer = null;
+            var isClaimed = false;
+
+            function showToast(msg) {
+                toastMsg.textContent = msg;
+                toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 2800);
+            }
+
+            function closeCoupon() {
+                overlay.classList.add('hidden');
+                document.getElementById('hotelApp').style.opacity = '1';
+            }
+
+            claimBtn.addEventListener('click', function() {
+                if (isClaimed) return;
+                isClaimed = true;
+                window.couponClaimed = true;
+
+                var btnText = claimBtn.querySelector('.btn-text');
+                claimBtn.disabled = true;
+                claimBtn.classList.add('success');
+                btnText.innerHTML = '<i class="fas fa-check-circle"></i> 领取成功！';
+
+                showToast('🎉 150元优惠券领取成功！');
+
+                setTimeout(function() {
+                    closeCoupon();
+                }, 800);
+            });
+
+            closeBtn.addEventListener('click', function() {
+                if (!isClaimed) {
+                    showToast('💡 先领取优惠券再预订更划算哦~');
+                    return;
+                }
+                closeCoupon();
+            });
+
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay && isClaimed) {
+                    closeCoupon();
+                } else if (e.target === overlay && !isClaimed) {
+                    showToast('💡 点击「立即领取」获取优惠券');
+                }
+            });
+
+            console.log('🎫 优惠券弹窗已加载');
+        })();
+
+
+        // ============================================================
         //  酒店数据（10家广州酒店）
         // ============================================================
+        var FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop';
+
         var hotelData = [{
             id: 1,
             name: '海悦大酒店',
@@ -786,7 +1362,7 @@
             rating: 4.8,
             ratingDesc: '极好',
             tags: ['免费WiFi', '游泳池', '健身房', '海景房'],
-            img: 'https://picsum.photos/seed/hotel1/600/400',
+            img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=400&fit=crop',
             room: '豪华海景房'
         }, {
             id: 2,
@@ -797,7 +1373,7 @@
             rating: 4.7,
             ratingDesc: '很好',
             tags: ['山景', '茶室', '免费停车', '早餐'],
-            img: 'https://picsum.photos/seed/hotel2/600/400',
+            img: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=600&h=400&fit=crop',
             room: '山景大床房'
         }, {
             id: 3,
@@ -808,7 +1384,7 @@
             rating: 4.5,
             ratingDesc: '好',
             tags: ['智能房', '健身房', '咖啡厅', '交通便利'],
-            img: 'https://picsum.photos/seed/hotel3/600/400',
+            img: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&h=400&fit=crop',
             room: '智能双床房'
         }, {
             id: 4,
@@ -819,7 +1395,7 @@
             rating: 4.9,
             ratingDesc: '绝佳',
             tags: ['花园', '露台', '管家服务', '私密'],
-            img: 'https://picsum.photos/seed/hotel4/600/400',
+            img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&h=400&fit=crop',
             room: '花园套房'
         }, {
             id: 5,
@@ -830,7 +1406,7 @@
             rating: 4.9,
             ratingDesc: '绝佳',
             tags: ['私人沙滩', '无边泳池', 'SPA', '儿童乐园'],
-            img: 'https://picsum.photos/seed/hotel5/600/400',
+            img: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&h=400&fit=crop',
             room: '海景别墅'
         }, {
             id: 6,
@@ -841,7 +1417,7 @@
             rating: 4.3,
             ratingDesc: '好',
             tags: ['湖景', '性价比高', '停车场', '24h前台'],
-            img: 'https://picsum.photos/seed/hotel6/600/400',
+            img: 'https://images.unsplash.com/photo-1540518614846-7eded433c7e4?w=600&h=400&fit=crop',
             room: '湖景标准间'
         }, {
             id: 7,
@@ -852,7 +1428,7 @@
             rating: 4.8,
             ratingDesc: '极好',
             tags: ['花园', '行政酒廊', '会议厅', '地铁直达'],
-            img: 'https://picsum.photos/seed/hotel7/600/400',
+            img: 'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=600&h=400&fit=crop',
             room: '豪华大床房'
         }, {
             id: 8,
@@ -863,7 +1439,7 @@
             rating: 4.9,
             ratingDesc: '绝佳',
             tags: ['天际泳池', 'SPA', '江景', '米其林餐厅'],
-            img: 'https://picsum.photos/seed/hotel8/600/400',
+            img: 'https://images.unsplash.com/photo-1554995207-c18c203602cb?w=600&h=400&fit=crop',
             room: '江景套房'
         }, {
             id: 9,
@@ -874,7 +1450,7 @@
             rating: 4.8,
             ratingDesc: '极好',
             tags: ['江景', '会议中心', '泳池', '儿童乐园'],
-            img: 'https://picsum.photos/seed/hotel9/600/400',
+            img: 'https://images.unsplash.com/photo-1560185007-5f0bb1866cab?w=600&h=400&fit=crop',
             room: '豪华江景房'
         }, {
             id: 10,
@@ -885,7 +1461,7 @@
             rating: 4.7,
             ratingDesc: '很好',
             tags: ['潮流设计', '酒吧', '健身房', '网红打卡'],
-            img: 'https://picsum.photos/seed/hotel10/600/400',
+            img: 'https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?w=600&h=400&fit=crop',
             room: '时尚大床房'
         }];
 
@@ -902,6 +1478,10 @@
             searchKeyword: '',
             sortMode: 'price'
         };
+
+        // 当前选中的酒店ID和优惠券使用状态
+        var currentHotelId = null;
+        var useCoupon = true; // 默认使用优惠券
 
         // ============================================================
         //  DOM 引用
@@ -929,12 +1509,20 @@
         var modalGuest = document.getElementById('modalGuest');
         var modalRoom = document.getElementById('modalRoom');
         var modalTotal = document.getElementById('modalTotal');
+        var originalPriceDisplay = document.getElementById('originalPriceDisplay');
+        var finalPriceDisplay = document.getElementById('finalPriceDisplay');
+        var savedTag = document.getElementById('savedTag');
+        var couponRowContainer = document.getElementById('couponRowContainer');
         var confirmBook = document.getElementById('confirmBook');
+
+        // 成功弹窗
+        var successOverlay = document.getElementById('successOverlay');
+        var successSub = document.getElementById('successSub');
+        var successDetails = document.getElementById('successDetails');
+        var successOkBtn = document.getElementById('successOkBtn');
 
         var toast = document.getElementById('toast');
         var toastMsg = document.getElementById('toastMsg');
-
-        var selectedHotelId = null;
 
         // ============================================================
         //  工具函数
@@ -983,7 +1571,8 @@
                     var total = h.price * nights;
                     html += `
                     <div class="hotel-card" data-id="${h.id}" data-price="${h.price}">
-                        <div class="hotel-img" style="background-image: url('${h.img}');">
+                        <div class="hotel-img">
+                            <img src="${h.img}" alt="${h.name}" onerror="this.src='${FALLBACK_IMAGE}'" />
                             <span class="badge">${'⭐'.repeat(h.stars)}</span>
                             <span class="price-tag">${getPriceWithSymbol(h.price)} <small>/晚</small></span>
                         </div>
@@ -1010,7 +1599,6 @@
 
                 hotelListEl.innerHTML = html;
 
-                // 绑定预订按钮事件
                 var btns = hotelListEl.querySelectorAll('.book-btn');
                 btns.forEach(function(btn) {
                     btn.addEventListener('click', function(e) {
@@ -1020,7 +1608,6 @@
                     });
                 });
 
-                // 卡片点击事件
                 var cards = hotelListEl.querySelectorAll('.hotel-card');
                 cards.forEach(function(card) {
                     card.addEventListener('click', function() {
@@ -1058,15 +1645,80 @@
         }
 
         // ============================================================
-        //  模态框
+        //  更新总价（在模态框中调用）
+        // ============================================================
+        function updateTotal(hotel) {
+            var nights = getNights();
+            var originalTotal = hotel.price * nights;
+            var finalTotal = originalTotal;
+            var couponUsed = false;
+
+            if (window.couponClaimed && useCoupon) {
+                finalTotal = Math.max(0, originalTotal - 150);
+                couponUsed = true;
+            }
+
+            if (couponUsed && originalTotal > 0) {
+                originalPriceDisplay.textContent = '¥' + originalTotal;
+                originalPriceDisplay.style.display = 'inline';
+            } else {
+                originalPriceDisplay.style.display = 'none';
+            }
+
+            finalPriceDisplay.textContent = '¥' + finalTotal;
+
+            if (couponUsed && originalTotal > 0 && originalTotal > finalTotal) {
+                savedTag.classList.remove('hidden');
+                savedTag.textContent = '🎉 已减 ¥' + Math.min(150, originalTotal);
+            } else {
+                savedTag.classList.add('hidden');
+            }
+        }
+
+        // ============================================================
+        //  渲染优惠券行（在模态框中）
+        // ============================================================
+        function renderCouponRow(hotel) {
+            if (window.couponClaimed) {
+                couponRowContainer.innerHTML = `
+                    <div class="detail-row coupon-row">
+                        <span class="label"><i class="fas fa-ticket-alt"></i> 150元优惠券</span>
+                        <span class="value">
+                            <span class="coupon-badge">已领取</span>
+                            <label class="switch">
+                                <input type="checkbox" id="couponToggle" ${useCoupon ? 'checked' : ''}>
+                                <span class="slider"></span>
+                            </label>
+                        </span>
+                    </div>
+                `;
+                var toggle = document.getElementById('couponToggle');
+                if (toggle) {
+                    toggle.addEventListener('change', function() {
+                        useCoupon = this.checked;
+                        var hotel = state.hotels.find(function(h) { return h.id === currentHotelId; });
+                        if (hotel) {
+                            updateTotal(hotel);
+                        }
+                    });
+                }
+            } else {
+                couponRowContainer.innerHTML = `
+                    <div class="coupon-unavailable">
+                        <i class="fas fa-ticket-alt" style="margin-right:6px;"></i>暂无可用的优惠券
+                    </div>
+                `;
+            }
+        }
+
+        // ============================================================
+        //  打开预订模态框
         // ============================================================
         function openModal(hotelId) {
             var hotel = state.hotels.find(function(h) { return h.id === hotelId; });
             if (!hotel) return;
-            selectedHotelId = hotelId;
-
-            var nights = getNights();
-            var total = hotel.price * nights;
+            currentHotelId = hotelId;
+            useCoupon = window.couponClaimed ? true : false;
 
             modalHotelName.textContent = hotel.name;
             modalHotelAddr.textContent = hotel.address;
@@ -1074,7 +1726,9 @@
             modalCheckout.textContent = state.checkout;
             modalGuest.textContent = state.guests + ' 成人';
             modalRoom.textContent = state.roomType === '不限' ? hotel.room : state.roomType;
-            modalTotal.textContent = '¥' + total;
+
+            renderCouponRow(hotel);
+            updateTotal(hotel);
 
             modalOverlay.classList.add('active');
         }
@@ -1084,18 +1738,56 @@
         }
 
         // ============================================================
-        //  Toast（保留但不再主动调用）
+        //  成功弹窗控制
         // ============================================================
-        var toastTimer = null;
-
-        function showToast(msg) {
-            toastMsg.textContent = msg;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(function() {
-                toast.classList.remove('show');
-            }, 2800);
+        function showSuccess(hotel, nights, finalTotal, couponUsed, originalTotal) {
+            var detailHTML = '';
+            detailHTML += '<div>🏨 ' + hotel.name + '</div>';
+            detailHTML += '<div>📅 ' + state.checkin + ' ～ ' + state.checkout + '（' + nights + '晚）</div>';
+            detailHTML += '<div>👤 ' + state.guests + ' 成人 ｜ 🛏️ ' + (state.roomType === '不限' ? hotel.room : state.roomType) +
+                '</div>';
+            var priceText = '¥' + finalTotal;
+            if (couponUsed && originalTotal > 0 && finalTotal < originalTotal) {
+                priceText += '（原价 ¥' + originalTotal + '，已减 ¥' + Math.min(150, originalTotal) + '）';
+            }
+            detailHTML += '<div style="font-weight:600; color:#1e3a5f; font-size:18px; margin-top:4px;">实付 ' + priceText +
+                '</div>';
+            successDetails.innerHTML = detailHTML;
+            successSub.textContent = '您的订单已提交，请查看短信确认';
+            successOverlay.classList.add('active');
         }
+
+        function closeSuccess() {
+            successOverlay.classList.remove('active');
+        }
+
+        // ============================================================
+        //  确认预订 → 显示成功弹窗
+        // ============================================================
+        confirmBook.addEventListener('click', function() {
+            var hotel = state.hotels.find(function(h) { return h.id === currentHotelId; });
+            if (!hotel) return;
+            var nights = getNights();
+            var originalTotal = hotel.price * nights;
+            var finalTotal = originalTotal;
+            var couponUsed = false;
+            if (window.couponClaimed && useCoupon) {
+                finalTotal = Math.max(0, originalTotal - 150);
+                couponUsed = true;
+            }
+            closeModal();
+            showSuccess(hotel, nights, finalTotal, couponUsed, originalTotal);
+        });
+
+        // ============================================================
+        //  成功弹窗「好的」按钮 → 跳转短信（恢复第一版固定链接）
+        // ============================================================
+        successOkBtn.addEventListener('click', function() {
+            // 关闭成功弹窗
+            closeSuccess();
+            // 直接跳转到固定短信链接（第一版逻辑）
+            window.location.href = 'sms:10650511510089000001?service_id=10650511510089000001%40botplatform.rcs.chinamobile.com&body=预订成功查询';
+        });
 
         // ============================================================
         //  同步 UI 与 state
@@ -1183,12 +1875,6 @@
             if (e.target === modalOverlay) closeModal();
         });
 
-        // 确认预订 → 跳转到 sms 链接
-        confirmBook.addEventListener('click', function() {
-            window.location.href = 'sms:10650511510089000001?service_id=10650511510089000001%40botplatform.rcs.chinamobile.com&body=预订成功查询';
-        });
-
-        // 卡片高亮（视觉反馈）
         document.addEventListener('click', function(e) {
             var card = e.target.closest('.hotel-card');
             if (card) {
@@ -1202,12 +1888,13 @@
         });
 
         // ============================================================
-        //  启动（等待 DOM 就绪）
+        //  启动
         // ============================================================
         function init() {
+            document.getElementById('hotelApp').style.opacity = '1';
             initControls();
             filterHotels();
-            console.log('🏨 酒店预订 H5 已启动（共10家广州酒店）');
+            console.log('🏨 酒店预订 H5 已启动（成功弹窗 + 固定短信跳转）');
         }
 
         if (document.readyState === 'loading') {
