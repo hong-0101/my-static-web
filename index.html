@@ -20,6 +20,7 @@
             color: #1e293b;
             padding-bottom: 80px;
             min-height: 100vh;
+            position: relative;
         }
 
         /* ===== 酒店预订页面容器 ===== */
@@ -60,6 +61,7 @@
             margin-left: 16px;
             opacity: 0.8;
             transition: opacity 0.2s;
+            cursor: pointer;
         }
 
         .header-top .actions i:active {
@@ -1100,6 +1102,207 @@
             background: #34d399;
             animation-delay: 0.45s;
         }
+
+        /* ================================================================
+           个人中心样式 (全屏遮罩)
+           ================================================================ */
+        .profile-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            background: #f5f7fb;
+            overflow-y: auto;
+            display: none;
+            flex-direction: column;
+            animation: slideUp 0.3s ease;
+        }
+
+        .profile-overlay.active {
+            display: flex;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #1e3a5f, #2a5f8f);
+            color: #fff;
+            padding: 18px 20px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-header .back-btn {
+            font-size: 22px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            background: none;
+            border: none;
+            color: #fff;
+        }
+
+        .profile-header .back-btn:active {
+            opacity: 1;
+        }
+
+        .profile-header .title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-header .right-placeholder {
+            width: 30px;
+        }
+
+        /* 会员卡区域 */
+        .profile-card {
+            background: linear-gradient(135deg, #f97316, #f59e0b);
+            margin: 20px 16px 16px;
+            border-radius: 20px;
+            padding: 20px 18px 18px;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .profile-card .card-top {
+            display: flex;
+            align-items: center;
+            /* 改为左对齐 */;
+        }
+
+        .profile-card .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-card .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* 移除 .user-name，直接使用 .user-id 并加大字号 */
+        .profile-card .user-id {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* 积分 & 优惠券 */
+        .profile-stats {
+            display: flex;
+            margin: 0 16px 16px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-stats .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 16px 8px;
+            border-right: 1px solid #f1f4f9;
+        }
+
+        .profile-stats .stat-item:last-child {
+            border-right: none;
+        }
+
+        .profile-stats .stat-item .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .profile-stats .stat-item .label {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* 订单分类 */
+        .profile-orders {
+            margin: 0 16px 16px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 0 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-orders .orders-title {
+            padding: 0 18px 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f4f9;
+        }
+
+        .profile-orders .orders-tabs {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 8px 8px;
+        }
+
+        .profile-orders .orders-tabs .tab {
+            text-align: center;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+            flex: 1;
+        }
+
+        .profile-orders .orders-tabs .tab:active {
+            background: #f1f4f9;
+        }
+
+        .profile-orders .orders-tabs .tab .tab-icon {
+            font-size: 24px;
+            color: #64748b;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .profile-orders .orders-tabs .tab .tab-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .profile-orders .orders-tabs .tab .tab-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 30px;
+            margin-left: 4px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -1152,8 +1355,7 @@
             <div class="header-top">
                 <h1><i class="fas fa-hotel"></i> 酒店预订</h1>
                 <div class="actions">
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-user-circle"></i>
+                    <i class="fas fa-user-circle" id="profileIcon"></i>
                 </div>
             </div>
         </header>
@@ -1278,6 +1480,63 @@
     </div>
     <!-- ===== /hotel-app ===== -->
 
+    <!-- ============================================================
+    个人中心页面 (全屏遮罩)
+    ============================================================ -->
+    <div class="profile-overlay" id="profileOverlay">
+        <!-- 顶部导航 -->
+        <div class="profile-header">
+            <button class="back-btn" id="profileBackBtn"><i class="fas fa-chevron-left"></i></button>
+            <span class="title">个人中心</span>
+            <span class="right-placeholder"></span>
+        </div>
+
+        <!-- 会员卡区域 -->
+        <div class="profile-card">
+            <div class="card-top">
+                <div class="user-info">
+                    <div class="avatar">ID</div>
+                    <div>
+                        <div class="user-id">103174889</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 积分 & 优惠券 -->
+        <div class="profile-stats">
+            <div class="stat-item">
+                <div class="num">0</div>
+                <div class="label">积分</div>
+            </div>
+            <div class="stat-item">
+                <div class="num">1</div>
+                <div class="label">优惠券</div>
+            </div>
+        </div>
+
+        <!-- 订单分类 -->
+        <div class="profile-orders">
+            <div class="orders-title">全部订单</div>
+            <div class="orders-tabs">
+                <div class="tab">
+                    <span class="tab-icon">🕒</span>
+                    <span class="tab-label">待支付</span>
+                    <span class="tab-badge">0</span>
+                </div>
+                <div class="tab">
+                    <span class="tab-icon">✅</span>
+                    <span class="tab-label">待确认</span>
+                    <span class="tab-badge">0</span>
+                </div>
+                <div class="tab">
+                    <span class="tab-icon">📋</span>
+                    <span class="tab-label">待使用</span>
+                    <span class="tab-badge">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // ============================================================
@@ -1345,6 +1604,39 @@
             });
 
             console.log('🎫 优惠券弹窗已加载');
+        })();
+
+        // ============================================================
+        //  个人中心控制
+        // ============================================================
+        (function() {
+            var profileIcon = document.getElementById('profileIcon');
+            var profileOverlay = document.getElementById('profileOverlay');
+            var backBtn = document.getElementById('profileBackBtn');
+
+            function openProfile() {
+                profileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeProfile() {
+                profileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            profileIcon.addEventListener('click', openProfile);
+            backBtn.addEventListener('click', closeProfile);
+
+            // 订单标签点击提示
+            var tabs = document.querySelectorAll('.profile-orders .tab');
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var label = this.querySelector('.tab-label').textContent;
+                    alert('查看「' + label + '」订单列表');
+                });
+            });
+
+            console.log('👤 个人中心已加载');
         })();
 
 
@@ -1481,7 +1773,7 @@
 
         // 当前选中的酒店ID和优惠券使用状态
         var currentHotelId = null;
-        var useCoupon = true; // 默认使用优惠券
+        var useCoupon = true;
 
         // ============================================================
         //  DOM 引用
@@ -1515,7 +1807,6 @@
         var couponRowContainer = document.getElementById('couponRowContainer');
         var confirmBook = document.getElementById('confirmBook');
 
-        // 成功弹窗
         var successOverlay = document.getElementById('successOverlay');
         var successSub = document.getElementById('successSub');
         var successDetails = document.getElementById('successDetails');
@@ -1645,7 +1936,7 @@
         }
 
         // ============================================================
-        //  更新总价（在模态框中调用）
+        //  更新总价
         // ============================================================
         function updateTotal(hotel) {
             var nights = getNights();
@@ -1676,7 +1967,7 @@
         }
 
         // ============================================================
-        //  渲染优惠券行（在模态框中）
+        //  渲染优惠券行
         // ============================================================
         function renderCouponRow(hotel) {
             if (window.couponClaimed) {
@@ -1780,12 +2071,10 @@
         });
 
         // ============================================================
-        //  成功弹窗「好的」按钮 → 跳转短信（恢复第一版固定链接）
+        //  成功弹窗「好的」按钮 → 跳转短信（固定链接）
         // ============================================================
         successOkBtn.addEventListener('click', function() {
-            // 关闭成功弹窗
             closeSuccess();
-            // 直接跳转到固定短信链接（第一版逻辑）
             window.location.href = 'sms:10650511510089000001?service_id=10650511510089000001%40botplatform.rcs.chinamobile.com&body=预订成功查询';
         });
 
@@ -1894,7 +2183,7 @@
             document.getElementById('hotelApp').style.opacity = '1';
             initControls();
             filterHotels();
-            console.log('🏨 酒店预订 H5 已启动（成功弹窗 + 固定短信跳转）');
+            console.log('🏨 酒店预订 H5 已启动（个人中心已简化）');
         }
 
         if (document.readyState === 'loading') {
