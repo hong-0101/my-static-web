@@ -854,7 +854,7 @@
         }
 
         /* ================================================================
-           优惠券弹窗样式
+           优惠券弹窗样式 (首次领取)
            ================================================================ */
         .coupon-overlay {
             position: fixed;
@@ -1183,7 +1183,6 @@
         .profile-card .card-top {
             display: flex;
             align-items: center;
-            /* 改为左对齐 */;
         }
 
         .profile-card .user-info {
@@ -1206,7 +1205,6 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
-        /* 移除 .user-name，直接使用 .user-id 并加大字号 */
         .profile-card .user-id {
             font-size: 18px;
             font-weight: 700;
@@ -1227,10 +1225,16 @@
             text-align: center;
             padding: 16px 8px;
             border-right: 1px solid #f1f4f9;
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
         .profile-stats .stat-item:last-child {
             border-right: none;
+        }
+
+        .profile-stats .stat-item:active {
+            background: #f1f4f9;
         }
 
         .profile-stats .stat-item .num {
@@ -1303,12 +1307,105 @@
             margin-left: 4px;
             font-weight: 600;
         }
+
+        /* ===== 优惠券详情弹窗 (点击个人中心优惠券) ===== */
+        .coupon-detail-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .coupon-detail-modal.active {
+            display: flex;
+        }
+
+        .coupon-detail-box {
+            background: #fff;
+            border-radius: 28px;
+            max-width: 360px;
+            width: 100%;
+            padding: 32px 24px 24px;
+            text-align: center;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        .coupon-detail-box .close-detail-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 24px;
+            color: #94a3b8;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .coupon-detail-box .close-detail-btn:active {
+            color: #1e293b;
+        }
+
+        .coupon-detail-box .detail-icon {
+            font-size: 56px;
+            margin-bottom: 6px;
+        }
+
+        .coupon-detail-box .detail-amount {
+            font-size: 42px;
+            font-weight: 800;
+            color: #e11d48;
+            line-height: 1.2;
+        }
+
+        .coupon-detail-box .detail-amount small {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .coupon-detail-box .detail-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 4px 0 6px;
+        }
+
+        .coupon-detail-box .detail-expiry {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        /* 已移除 .detail-desc 样式 */
+
+        .coupon-detail-box .detail-btn {
+            background: linear-gradient(135deg, #2a5f8f, #1e3a5f);
+            color: #fff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s;
+            box-shadow: 0 4px 12px rgba(42, 95, 143, 0.3);
+        }
+
+        .coupon-detail-box .detail-btn:active {
+            transform: scale(0.96);
+        }
     </style>
 </head>
 <body>
 
     <!-- ============================================================
-    优惠券弹窗（默认显示）
+    优惠券弹窗（首次加载领取）
     ============================================================ -->
     <div class="coupon-overlay" id="couponOverlay">
         <div class="coupon-card">
@@ -1509,7 +1606,7 @@
                 <div class="num">0</div>
                 <div class="label">积分</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-item" id="couponStatItem">
                 <div class="num">1</div>
                 <div class="label">优惠券</div>
             </div>
@@ -1538,6 +1635,21 @@
         </div>
     </div>
 
+    <!-- ============================================================
+    优惠券详情弹窗 (点击个人中心优惠券)
+    ============================================================ -->
+    <div class="coupon-detail-modal" id="couponDetailModal">
+        <div class="coupon-detail-box">
+            <button class="close-detail-btn" id="closeDetailBtn"><i class="fas fa-times"></i></button>
+            <div class="detail-icon">🧧</div>
+            <div class="detail-amount"><small>¥</small>150</div>
+            <div class="detail-title">酒店预订优惠券</div>
+            <div class="detail-expiry">⏰ 有效期至 2026-09-30</div>
+            <!-- 已移除 detail-desc (满500元可用) -->
+            <button class="detail-btn" id="detailOkBtn">知道了</button>
+        </div>
+    </div>
+
     <script>
         // ============================================================
         //  全局状态：优惠券是否已领取
@@ -1545,7 +1657,7 @@
         window.couponClaimed = false;
 
         // ============================================================
-        //  优惠券弹窗逻辑
+        //  优惠券弹窗逻辑 (首次领取)
         // ============================================================
         (function() {
             var overlay = document.getElementById('couponOverlay');
@@ -1614,6 +1726,12 @@
             var profileOverlay = document.getElementById('profileOverlay');
             var backBtn = document.getElementById('profileBackBtn');
 
+            // 优惠券详情弹窗相关
+            var couponDetailModal = document.getElementById('couponDetailModal');
+            var closeDetailBtn = document.getElementById('closeDetailBtn');
+            var detailOkBtn = document.getElementById('detailOkBtn');
+            var couponStatItem = document.getElementById('couponStatItem');
+
             function openProfile() {
                 profileOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
@@ -1624,8 +1742,27 @@
                 document.body.style.overflow = '';
             }
 
+            function openCouponDetail() {
+                couponDetailModal.classList.add('active');
+            }
+
+            function closeCouponDetail() {
+                couponDetailModal.classList.remove('active');
+            }
+
             profileIcon.addEventListener('click', openProfile);
             backBtn.addEventListener('click', closeProfile);
+
+            // 点击优惠券统计项弹出详情
+            couponStatItem.addEventListener('click', openCouponDetail);
+            closeDetailBtn.addEventListener('click', closeCouponDetail);
+            detailOkBtn.addEventListener('click', closeCouponDetail);
+            // 点击遮罩关闭
+            couponDetailModal.addEventListener('click', function(e) {
+                if (e.target === couponDetailModal) {
+                    closeCouponDetail();
+                }
+            });
 
             // 订单标签点击提示
             var tabs = document.querySelectorAll('.profile-orders .tab');
@@ -1771,7 +1908,6 @@
             sortMode: 'price'
         };
 
-        // 当前选中的酒店ID和优惠券使用状态
         var currentHotelId = null;
         var useCoupon = true;
 
@@ -2183,7 +2319,7 @@
             document.getElementById('hotelApp').style.opacity = '1';
             initControls();
             filterHotels();
-            console.log('🏨 酒店预订 H5 已启动（个人中心已简化）');
+            console.log('🏨 酒店预订 H5 已启动（个人中心优惠券可点击）');
         }
 
         if (document.readyState === 'loading') {
