@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>个人中心</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        /* ===== 全局重置 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f7fb;
+            color: #1e293b;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== 顶部导航 ===== */
+        .profile-header {
+            background: linear-gradient(135deg, #1e3a5f, #2a5f8f);
+            color: #fff;
+            padding: 18px 20px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+
+        .profile-header .back-btn {
+            font-size: 22px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+            background: none;
+            border: none;
+            color: #fff;
+        }
+
+        .profile-header .back-btn:active {
+            opacity: 1;
+        }
+
+        .profile-header .title {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-header .right-placeholder {
+            width: 30px;
+        }
+
+        /* ===== 会员卡区域 ===== */
+        .profile-card {
+            background: linear-gradient(135deg, #f97316, #f59e0b);
+            margin: 20px 16px 16px;
+            border-radius: 20px;
+            padding: 20px 18px 18px;
+            color: #fff;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+
+        .profile-card .card-top {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-card .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-card .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-card .user-id {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* ===== 积分 & 优惠券 ===== */
+        .profile-stats {
+            display: flex;
+            margin: 0 16px 16px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-stats .stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 16px 8px;
+            border-right: 1px solid #f1f4f9;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .profile-stats .stat-item:last-child {
+            border-right: none;
+        }
+
+        .profile-stats .stat-item:active {
+            background: #f1f4f9;
+        }
+
+        .profile-stats .stat-item .num {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .profile-stats .stat-item .label {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        /* ===== 订单分类 ===== */
+        .profile-orders {
+            margin: 0 16px 16px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 0 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .profile-orders .orders-title {
+            padding: 0 18px 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f4f9;
+        }
+
+        .profile-orders .orders-tabs {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 8px 8px;
+        }
+
+        .profile-orders .orders-tabs .tab {
+            text-align: center;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+            flex: 1;
+        }
+
+        .profile-orders .orders-tabs .tab:active {
+            background: #f1f4f9;
+        }
+
+        .profile-orders .orders-tabs .tab .tab-icon {
+            font-size: 24px;
+            color: #64748b;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .profile-orders .orders-tabs .tab .tab-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .profile-orders .orders-tabs .tab .tab-badge {
+            display: inline-block;
+            background: #ef4444;
+            color: #fff;
+            font-size: 10px;
+            padding: 1px 6px;
+            border-radius: 30px;
+            margin-left: 4px;
+            font-weight: 600;
+        }
+
+        /* ===== 优惠券详情弹窗 ===== */
+        .coupon-detail-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .coupon-detail-modal.active {
+            display: flex;
+        }
+
+        .coupon-detail-box {
+            background: #fff;
+            border-radius: 28px;
+            max-width: 360px;
+            width: 100%;
+            padding: 32px 24px 24px;
+            text-align: center;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+            position: relative;
+        }
+
+        .coupon-detail-box .close-detail-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 24px;
+            color: #94a3b8;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .coupon-detail-box .close-detail-btn:active {
+            color: #1e293b;
+        }
+
+        .coupon-detail-box .detail-icon {
+            font-size: 56px;
+            margin-bottom: 6px;
+        }
+
+        .coupon-detail-box .detail-amount {
+            font-size: 42px;
+            font-weight: 800;
+            color: #e11d48;
+            line-height: 1.2;
+        }
+
+        .coupon-detail-box .detail-amount small {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .coupon-detail-box .detail-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 4px 0 6px;
+        }
+
+        .coupon-detail-box .detail-expiry {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .coupon-detail-box .detail-btn {
+            background: linear-gradient(135deg, #2a5f8f, #1e3a5f);
+            color: #fff;
+            border: none;
+            padding: 12px 40px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s;
+            box-shadow: 0 4px 12px rgba(42, 95, 143, 0.3);
+        }
+
+        .coupon-detail-box .detail-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== 动画 ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.96);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 顶部导航 ===== -->
+    <div class="profile-header">
+        <button class="back-btn" id="backBtn"><i class="fas fa-chevron-left"></i></button>
+        <span class="title">个人中心</span>
+        <span class="right-placeholder"></span>
+    </div>
+
+    <!-- ===== 会员卡区域 ===== -->
+    <div class="profile-card">
+        <div class="card-top">
+            <div class="user-info">
+                <div class="avatar">ID</div>
+                <div>
+                    <div class="user-id">103174889</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 积分 & 优惠券 ===== -->
+    <div class="profile-stats">
+        <div class="stat-item">
+            <div class="num">0</div>
+            <div class="label">积分</div>
+        </div>
+        <div class="stat-item" id="couponStatItem">
+            <div class="num">1</div>
+            <div class="label">优惠券</div>
+        </div>
+    </div>
+
+    <!-- ===== 订单分类 ===== -->
+    <div class="profile-orders">
+        <div class="orders-title">全部订单</div>
+        <div class="orders-tabs">
+            <div class="tab">
+                <span class="tab-icon">🕒</span>
+                <span class="tab-label">待支付</span>
+                <span class="tab-badge">0</span>
+            </div>
+            <div class="tab">
+                <span class="tab-icon">✅</span>
+                <span class="tab-label">待确认</span>
+                <span class="tab-badge">0</span>
+            </div>
+            <div class="tab">
+                <span class="tab-icon">📋</span>
+                <span class="tab-label">待使用</span>
+                <span class="tab-badge">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 优惠券详情弹窗 ===== -->
+    <div class="coupon-detail-modal" id="couponDetailModal">
+        <div class="coupon-detail-box">
+            <button class="close-detail-btn" id="closeDetailBtn"><i class="fas fa-times"></i></button>
+            <div class="detail-icon">🧧</div>
+            <div class="detail-amount"><small>¥</small>150</div>
+            <div class="detail-title">酒店预订优惠券</div>
+            <div class="detail-expiry">⏰ 有效期至 2026-09-30</div>
+            <button class="detail-btn" id="detailOkBtn">知道了</button>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        //  交互逻辑
+        // ============================================================
+
+        // 返回按钮（可自定义跳转，这里演示返回上一页）
+        document.getElementById('backBtn').addEventListener('click', function() {
+            if (document.referrer) {
+                history.back();
+            } else {
+                alert('返回上一页');
+                // 可以改为 window.location.href = '其他页面.html';
+            }
+        });
+
+        // 优惠券详情弹窗
+        var couponStatItem = document.getElementById('couponStatItem');
+        var couponDetailModal = document.getElementById('couponDetailModal');
+        var closeDetailBtn = document.getElementById('closeDetailBtn');
+        var detailOkBtn = document.getElementById('detailOkBtn');
+
+        function openCouponDetail() {
+            couponDetailModal.classList.add('active');
+        }
+
+        function closeCouponDetail() {
+            couponDetailModal.classList.remove('active');
+        }
+
+        couponStatItem.addEventListener('click', openCouponDetail);
+        closeDetailBtn.addEventListener('click', closeCouponDetail);
+        detailOkBtn.addEventListener('click', closeCouponDetail);
+        couponDetailModal.addEventListener('click', function(e) {
+            if (e.target === couponDetailModal) {
+                closeCouponDetail();
+            }
+        });
+
+        // 订单标签点击提示
+        var tabs = document.querySelectorAll('.profile-orders .tab');
+        tabs.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                var label = this.querySelector('.tab-label').textContent;
+                alert('查看「' + label + '」订单列表');
+            });
+        });
+
+        console.log('📱 个人中心独立页面已加载');
+    </script>
+</body>
+</html>
