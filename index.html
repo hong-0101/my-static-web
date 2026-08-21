@@ -854,256 +854,6 @@
         }
 
         /* ================================================================
-           优惠券弹窗样式 (首次领取)
-           ================================================================ */
-        .coupon-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-            animation: fadeIn 0.4s ease;
-        }
-
-        .coupon-overlay.hidden {
-            display: none;
-            animation: none;
-        }
-
-        .coupon-card {
-            background: #fff;
-            max-width: 380px;
-            width: 100%;
-            border-radius: 28px;
-            padding: 0 0 24px 0;
-            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
-            animation: slideUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .coupon-header {
-            background: linear-gradient(135deg, #f43f5e, #e11d48);
-            padding: 32px 24px 28px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .coupon-header::before {
-            content: '';
-            position: absolute;
-            top: -60px;
-            right: -60px;
-            width: 160px;
-            height: 160px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 50%;
-        }
-
-        .coupon-header::after {
-            content: '';
-            position: absolute;
-            bottom: -40px;
-            left: -40px;
-            width: 120px;
-            height: 120px;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 50%;
-        }
-
-        .coupon-header .coupon-icon {
-            font-size: 44px;
-            margin-bottom: 8px;
-            display: block;
-            position: relative;
-            z-index: 1;
-        }
-
-        .coupon-header .coupon-title {
-            font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .coupon-header .coupon-amount {
-            font-size: 58px;
-            font-weight: 800;
-            color: #fff;
-            line-height: 1.1;
-            margin-top: 4px;
-            position: relative;
-            z-index: 1;
-            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .coupon-header .coupon-amount small {
-            font-size: 26px;
-            font-weight: 600;
-        }
-
-        .coupon-header .coupon-sub {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.85);
-            margin-top: 2px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .coupon-body {
-            padding: 20px 24px 0;
-            text-align: center;
-        }
-
-        .coupon-body .coupon-expiry {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 18px;
-        }
-
-        .coupon-body .coupon-btn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #f43f5e, #e11d48);
-            color: #fff;
-            border: none;
-            border-radius: 16px;
-            font-size: 18px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 8px 24px rgba(225, 29, 72, 0.35);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.5px;
-        }
-
-        .coupon-body .coupon-btn:active {
-            transform: scale(0.96);
-            box-shadow: 0 4px 12px rgba(225, 29, 72, 0.25);
-        }
-
-        .coupon-body .coupon-btn:disabled {
-            opacity: 0.7;
-            transform: scale(0.98);
-            cursor: not-allowed;
-        }
-
-        .coupon-body .coupon-btn .btn-text {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .coupon-body .coupon-btn .btn-text i {
-            font-size: 18px;
-        }
-
-        .coupon-body .coupon-btn.success {
-            background: linear-gradient(135deg, #22c55e, #16a34a);
-            box-shadow: 0 8px 24px rgba(22, 163, 74, 0.35);
-        }
-
-        .coupon-body .coupon-tip {
-            font-size: 11px;
-            color: #cbd5e1;
-            margin-top: 14px;
-            padding-bottom: 4px;
-        }
-
-        .coupon-divider {
-            height: 2px;
-            background: repeating-linear-gradient(90deg, #e2e8f0 0px, #e2e8f0 8px, transparent 8px, transparent 14px);
-            margin: 16px 24px 0;
-        }
-
-        .coupon-close {
-            position: absolute;
-            top: 14px;
-            right: 18px;
-            font-size: 22px;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: color 0.2s, transform 0.2s;
-            background: none;
-            border: none;
-            z-index: 10;
-            padding: 4px 8px;
-        }
-
-        .coupon-close:active {
-            color: #fff;
-            transform: scale(0.9);
-        }
-
-        .confetti-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 0;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            border-radius: 2px;
-            animation: confettiDrop 1.2s ease-in forwards;
-        }
-
-        .confetti:nth-child(1) {
-            left: 10%;
-            background: #fbbf24;
-            animation-delay: 0.1s;
-        }
-        .confetti:nth-child(2) {
-            left: 30%;
-            background: #f472b6;
-            animation-delay: 0.3s;
-        }
-        .confetti:nth-child(3) {
-            left: 50%;
-            background: #60a5fa;
-            animation-delay: 0.5s;
-        }
-        .confetti:nth-child(4) {
-            left: 70%;
-            background: #34d399;
-            animation-delay: 0.2s;
-        }
-        .confetti:nth-child(5) {
-            left: 90%;
-            background: #fbbf24;
-            animation-delay: 0.4s;
-        }
-        .confetti:nth-child(6) {
-            left: 20%;
-            background: #f472b6;
-            animation-delay: 0.6s;
-        }
-        .confetti:nth-child(7) {
-            left: 60%;
-            background: #60a5fa;
-            animation-delay: 0.15s;
-        }
-        .confetti:nth-child(8) {
-            left: 80%;
-            background: #34d399;
-            animation-delay: 0.45s;
-        }
-
-        /* ================================================================
            个人中心样式 (全屏遮罩)
            ================================================================ */
         .profile-overlay {
@@ -1382,8 +1132,6 @@
             margin-bottom: 20px;
         }
 
-        /* 已移除 .detail-desc 样式 */
-
         .coupon-detail-box .detail-btn {
             background: linear-gradient(135deg, #2a5f8f, #1e3a5f);
             color: #fff;
@@ -1403,45 +1151,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ============================================================
-    优惠券弹窗（首次加载领取）
-    ============================================================ -->
-    <div class="coupon-overlay" id="couponOverlay">
-        <div class="coupon-card">
-            <button class="coupon-close" id="couponCloseBtn" aria-label="关闭">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="coupon-header">
-                <div class="confetti-container">
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                    <div class="confetti"></div>
-                </div>
-                <span class="coupon-icon">🧧</span>
-                <div class="coupon-title">🎊 恭喜获得</div>
-                <div class="coupon-amount">
-                    <small>¥</small>150
-                </div>
-                <div class="coupon-sub">酒店预订优惠券</div>
-            </div>
-            <div class="coupon-body">
-                <div class="coupon-expiry">⏰ 有效期至 2026-09-30</div>
-                <button class="coupon-btn" id="couponClaimBtn">
-                    <span class="btn-text">
-                        <i class="fas fa-gift"></i> 立即领取
-                    </span>
-                </button>
-                <div class="coupon-tip">点击领取即表示同意使用条款</div>
-            </div>
-            <div class="coupon-divider"></div>
-        </div>
-    </div>
 
     <!-- ============================================================
     酒店预订页面
@@ -1645,138 +1354,11 @@
             <div class="detail-amount"><small>¥</small>150</div>
             <div class="detail-title">酒店预订优惠券</div>
             <div class="detail-expiry">⏰ 有效期至 2026-09-30</div>
-            <!-- 已移除 detail-desc (满500元可用) -->
             <button class="detail-btn" id="detailOkBtn">知道了</button>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        //  全局状态：优惠券是否已领取
-        // ============================================================
-        window.couponClaimed = false;
-
-        // ============================================================
-        //  优惠券弹窗逻辑 (首次领取)
-        // ============================================================
-        (function() {
-            var overlay = document.getElementById('couponOverlay');
-            var claimBtn = document.getElementById('couponClaimBtn');
-            var closeBtn = document.getElementById('couponCloseBtn');
-            var toast = document.getElementById('toast');
-            var toastMsg = document.getElementById('toastMsg');
-            var toastTimer = null;
-            var isClaimed = false;
-
-            function showToast(msg) {
-                toastMsg.textContent = msg;
-                toast.classList.add('show');
-                clearTimeout(toastTimer);
-                toastTimer = setTimeout(function() {
-                    toast.classList.remove('show');
-                }, 2800);
-            }
-
-            function closeCoupon() {
-                overlay.classList.add('hidden');
-                document.getElementById('hotelApp').style.opacity = '1';
-            }
-
-            claimBtn.addEventListener('click', function() {
-                if (isClaimed) return;
-                isClaimed = true;
-                window.couponClaimed = true;
-
-                var btnText = claimBtn.querySelector('.btn-text');
-                claimBtn.disabled = true;
-                claimBtn.classList.add('success');
-                btnText.innerHTML = '<i class="fas fa-check-circle"></i> 领取成功！';
-
-                showToast('🎉 150元优惠券领取成功！');
-
-                setTimeout(function() {
-                    closeCoupon();
-                }, 800);
-            });
-
-            closeBtn.addEventListener('click', function() {
-                if (!isClaimed) {
-                    showToast('💡 先领取优惠券再预订更划算哦~');
-                    return;
-                }
-                closeCoupon();
-            });
-
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay && isClaimed) {
-                    closeCoupon();
-                } else if (e.target === overlay && !isClaimed) {
-                    showToast('💡 点击「立即领取」获取优惠券');
-                }
-            });
-
-            console.log('🎫 优惠券弹窗已加载');
-        })();
-
-        // ============================================================
-        //  个人中心控制
-        // ============================================================
-        (function() {
-            var profileIcon = document.getElementById('profileIcon');
-            var profileOverlay = document.getElementById('profileOverlay');
-            var backBtn = document.getElementById('profileBackBtn');
-
-            // 优惠券详情弹窗相关
-            var couponDetailModal = document.getElementById('couponDetailModal');
-            var closeDetailBtn = document.getElementById('closeDetailBtn');
-            var detailOkBtn = document.getElementById('detailOkBtn');
-            var couponStatItem = document.getElementById('couponStatItem');
-
-            function openProfile() {
-                profileOverlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeProfile() {
-                profileOverlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            function openCouponDetail() {
-                couponDetailModal.classList.add('active');
-            }
-
-            function closeCouponDetail() {
-                couponDetailModal.classList.remove('active');
-            }
-
-            profileIcon.addEventListener('click', openProfile);
-            backBtn.addEventListener('click', closeProfile);
-
-            // 点击优惠券统计项弹出详情
-            couponStatItem.addEventListener('click', openCouponDetail);
-            closeDetailBtn.addEventListener('click', closeCouponDetail);
-            detailOkBtn.addEventListener('click', closeCouponDetail);
-            // 点击遮罩关闭
-            couponDetailModal.addEventListener('click', function(e) {
-                if (e.target === couponDetailModal) {
-                    closeCouponDetail();
-                }
-            });
-
-            // 订单标签点击提示
-            var tabs = document.querySelectorAll('.profile-orders .tab');
-            tabs.forEach(function(tab) {
-                tab.addEventListener('click', function() {
-                    var label = this.querySelector('.tab-label').textContent;
-                    alert('查看「' + label + '」订单列表');
-                });
-            });
-
-            console.log('👤 个人中心已加载');
-        })();
-
-
         // ============================================================
         //  酒店数据（10家广州酒店）
         // ============================================================
@@ -1910,6 +1492,9 @@
 
         var currentHotelId = null;
         var useCoupon = true;
+
+        // ===== 关键修改：默认已领取优惠券 =====
+        window.couponClaimed = true; // 设置为 true，预订时优惠券默认可用
 
         // ============================================================
         //  DOM 引用
@@ -2313,13 +1898,69 @@
         });
 
         // ============================================================
+        //  个人中心控制（遮罩）
+        // ============================================================
+        (function() {
+            var profileIcon = document.getElementById('profileIcon');
+            var profileOverlay = document.getElementById('profileOverlay');
+            var backBtn = document.getElementById('profileBackBtn');
+
+            // 优惠券详情弹窗相关
+            var couponDetailModal = document.getElementById('couponDetailModal');
+            var closeDetailBtn = document.getElementById('closeDetailBtn');
+            var detailOkBtn = document.getElementById('detailOkBtn');
+            var couponStatItem = document.getElementById('couponStatItem');
+
+            function openProfile() {
+                profileOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeProfile() {
+                profileOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function openCouponDetail() {
+                couponDetailModal.classList.add('active');
+            }
+
+            function closeCouponDetail() {
+                couponDetailModal.classList.remove('active');
+            }
+
+            profileIcon.addEventListener('click', openProfile);
+            backBtn.addEventListener('click', closeProfile);
+
+            couponStatItem.addEventListener('click', openCouponDetail);
+            closeDetailBtn.addEventListener('click', closeCouponDetail);
+            detailOkBtn.addEventListener('click', closeCouponDetail);
+            couponDetailModal.addEventListener('click', function(e) {
+                if (e.target === couponDetailModal) {
+                    closeCouponDetail();
+                }
+            });
+
+            // 订单标签点击提示
+            var tabs = document.querySelectorAll('.profile-orders .tab');
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var label = this.querySelector('.tab-label').textContent;
+                    alert('查看「' + label + '」订单列表');
+                });
+            });
+
+            console.log('👤 个人中心遮罩已加载');
+        })();
+
+        // ============================================================
         //  启动
         // ============================================================
         function init() {
             document.getElementById('hotelApp').style.opacity = '1';
             initControls();
             filterHotels();
-            console.log('🏨 酒店预订 H5 已启动（个人中心优惠券可点击）');
+            console.log('🏨 酒店预订 H5 已启动（优惠券默认已领取）');
         }
 
         if (document.readyState === 'loading') {
